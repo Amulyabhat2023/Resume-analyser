@@ -1,0 +1,32 @@
+John Doe
+123 Main Street
+Cityville, State 12345
+Phone: (555) 123-4567
+Email: john.doe@example.com
+
+Objective
+Experienced software developer with 5+ years of experience in building scalable web applications. Seeking to leverage my programming, cloud, and DevOps skills at a growing tech company.
+
+Work Experience
+Software Engineer, TechCorp Inc.
+June 2018 - Present
+- Developed web applications using Python, Django, and JavaScript.
+- Led migration to AWS cloud infrastructure.
+- Implemented CI/CD pipelines using Jenkins and Docker.
+
+Junior Developer, WebSolutions LLC
+January 2016 - May 2018
+- Maintained and enhanced client websites using HTML, CSS, and React.js.
+- Optimized SQL database queries to improve performance.
+
+Education
+Bachelor of Science in Computer Science
+State University, 2012 - 2016
+Graduated with honors, GPA: 3.7/4.0
+
+Skills
+Python, JavaScript, Django, React.js, AWS, Docker, Jenkins, SQL, Git
+
+Certifications
+AWS Certified Solutions Architect
+Docker Certified Associate

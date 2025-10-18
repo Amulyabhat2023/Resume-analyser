@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>AI Resume Analyzer</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #eee;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 2rem;
+        }
+        h1 {
+            color: #ffcc00;
+            text-align: center;
+        }
+        form {
+            max-width: 600px;
+            margin: 2rem auto;
+            background: #222;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        input[type="file"], textarea {
+            width: 100%;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: #333;
+            border: none;
+            border-radius: 4px;
+            color: #eee;
+        }
+        button {
+            background-color: #ffcc00;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            color: #222;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+        .result {
+            margin-top: 2rem;
+            max-width: 600px;
+            background: #222;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+        }
+        .skills {
+            margin-top: 1rem;
+        }
+        .skill {
+            display: inline-block;
+            background: #444;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            margin: 0.25rem 0.25rem 0 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI-Powered Resume Analyzer & Job Match</h1>
+    <form id="upload-form" enctype="multipart/form-data">
+        <label for="resume">Upload Resume (PDF, DOCX, TXT):</label>
+        <input type="file" id="resume" name="resume" accept=".pdf,.docx,.txt" required />
+        <label for="jobdesc">Job Description (optional):</label>
+        <textarea id="jobdesc" name="job_description" rows="4" placeholder="Paste job description here..."></textarea>
+        <button type="submit">Analyze</button>
+    </form>
+
+    <div id="result" class="result" style="display:none;">
+        <h2>Analysis Result</h2>
+        <p><strong>Match Score:</strong> <span id="matchScore"></span>%</p>
+        <p><strong>Predicted Category:</strong> <span id="category"></span></p>
+        <div class="skills">
+            <strong>Skills:</strong> <span id="skills"></span>
+        </div>
+        <div class="skills">
+            <strong>Missing Skills:</strong> <span id="missingSkills"></span>
+        </div>
+        <div>
+            <strong>Recommendations:</strong>
+            <ul id="recommendations"></ul>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('upload-form');
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            
+            const response = await fetch('/upload', { method: 'POST', body: formData });
+            const data = await response.json();
+
+            if (data.analysis_id) {
+                window.location.href = '/results/' + data.analysis_id;
+            } else if (data.error) {
+                // Inline display instead of alert
+                document.getElementById('error').textContent = data.error;
+            } else {
+                document.getElementById('error').textContent = 'Analysis failed';
+            }
+        };
+
+    </script>
+
+</body>
+</html>
