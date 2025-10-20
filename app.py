@@ -70,7 +70,7 @@ def upload_resume():
         'recommendations': recommendations,
         'analysis_id': analysis_record.id
     })
-
+    
 from flask import render_template
 
 @app.route('/results/<int:analysis_id>')
@@ -78,17 +78,17 @@ def show_results(analysis_id):
     analysis_record = Analysis.query.get_or_404(analysis_id)
     recommendations = json.loads(analysis_record.recommendations) if analysis_record.recommendations else []
     skill_analysis = json.loads(analysis_record.skill_analysis) if analysis_record.skill_analysis else {}
+    match_score = analysis_record.match_score
+    category = ... # Load category as needed (if stored in the db, or handle from Resume/Job tables)
 
     return render_template(
         'results.html',
-        match_score=analysis_record.match_score,
+        match_score=match_score,
         recommendations=recommendations,
         skill_analysis=skill_analysis,
-        resume_id=analysis_record.resume_id,
-        job_id=analysis_record.job_id,
-        created_at=analysis_record.created_at
+        category=category,
+        analysis=analysis_record
     )
-
 
 if __name__ == '__main__':
     app.run(debug=Config.DEBUG)

@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Analysis Results</title>
+    <title>Resume Analysis Results</title>
+    <style>
+        body { background: #121212; color: #eee; font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; margin:2rem; }
+        h1, h2 { color: #ffcc00; }
+        .box { background:#222; border-radius:8px; padding:2rem; max-width:700px; margin:2rem auto;}
+        ul { margin-left: 1rem; }
+    </style>
 </head>
 <body>
-    <h2>Analysis Results</h2>
-    <p><strong>Match Score:</strong> {{ match_score }}</p>
-    <p><strong>Resume ID:</strong> {{ resume_id }}</p>
-    <p><strong>Job ID:</strong> {{ job_id }}</p>
-    <p><strong>Created At:</strong> {{ created_at }}</p>
-
-    <h3>Recommendations</h3>
-    <ul>
-    {% for reco in recommendations %}
-        <li>{{ reco }}</li>
-    {% endfor %}
-    </ul>
-
-    <h3>Skill Analysis</h3>
-    <ul>
-    {% for key, val in skill_analysis.items() %}
-        <li>{{ key }}: {{ val }}</li>
-    {% endfor %}
-    </ul>
+    <div class="box">
+        <h2>Analysis Result</h2>
+        <p><strong>Match Score:</strong> {{ match_score }}</p>
+        <p><strong>Predicted Category:</strong> {{ category }}</p>
+        <h3>Recommendations</h3>
+        <ul>
+        {% for r in recommendations %}
+            <li>{{ r }}</li>
+        {% endfor %}
+        </ul>
+        <h3>Skill Analysis</h3>
+        <ul>
+        {% for key, val in skill_analysis.items() %}
+            <li><b>{{ key }}</b>: {{ val }}</li>
+        {% endfor %}
+        </ul>
+        <a href="/">&#60; Back to Upload</a>
+    </div>
 </body>
 </html>
