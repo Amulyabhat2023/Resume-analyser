@@ -1,32 +1,150 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Resume Analysis Results</title>
+    <meta charset="UTF-8">
+    <title>Analysis Results</title>
     <style>
-        body { background: #121212; color: #eee; font-family: 'Segoe UI', Tahoma, Verdana, sans-serif; margin:2rem; }
-        h1, h2 { color: #ffcc00; }
-        .box { background:#222; border-radius:8px; padding:2rem; max-width:700px; margin:2rem auto;}
-        ul { margin-left: 1rem; }
+        body {
+            background: linear-gradient(145deg, #0f0f0f, #1a1a1a);
+            color: #f2f2f2;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 3rem 1rem;
+        }
+
+        .container {
+            background: #1e1e1e;
+            border-radius: 12px;
+            padding: 2rem 3rem;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 0 40px rgba(255, 204, 51, 0.2);
+        }
+
+        h1 {
+            color: #ffcc33;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        .score {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffdd66;
+            margin-bottom: 1.5rem;
+        }
+
+        .recommendations {
+            margin-top: 2rem;
+        }
+
+        .recommendations ul {
+            background: #2a2a2a;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .recommendations li {
+            margin: 0.5rem 0;
+            background: #333;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 1.5rem;
+        }
+
+        th, td {
+            padding: 1rem;
+            border-bottom: 1px solid #444;
+            text-align: left;
+        }
+
+        th {
+            background: #ffcc33;
+            color: #222;
+        }
+
+        tr:hover {
+            background: #333;
+        }
+
+        a.back {
+            display: inline-block;
+            margin-top: 2rem;
+            text-decoration: none;
+            background: #ffcc33;
+            color: #222;
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        a.back:hover {
+            background: #ffaa00;
+        }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h2>Analysis Result</h2>
-        <p><strong>Match Score:</strong> {{ match_score }}</p>
-        <p><strong>Predicted Category:</strong> {{ category }}</p>
-        <h3>Recommendations</h3>
-        <ul>
-        {% for r in recommendations %}
-            <li>{{ r }}</li>
-        {% endfor %}
-        </ul>
-        <h3>Skill Analysis</h3>
-        <ul>
-        {% for key, val in skill_analysis.items() %}
-            <li><b>{{ key }}</b>: {{ val }}</li>
-        {% endfor %}
-        </ul>
-        <a href="/">&#60; Back to Upload</a>
+    <div class="container">
+        <h1>Resume Analysis Results</h1>
+
+        <div class="score">Match Score: {{ match_score }}%</div>
+        <p style="text-align:center;"><strong>Predicted Category:</strong> {{ category }}</p>
+
+        <h2>Skill Comparison</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Matched Skills</th>
+                    <th>Missing Skills</th>
+                    <th>Additional Skills</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {% for s in skill_analysis.matched_skills %}
+                            {{ s }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for s in skill_analysis.missing_skills %}
+                            {{ s }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for s in skill_analysis.additional_skills %}
+                            {{ s }}<br>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="recommendations">
+            <h2>Recommendations</h2>
+            <ul>
+            {% for r in recommendations %}
+                <li>{{ r }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+        <div class="recommendations">
+            <h2>Skill Match:{{ skill_analysis.match_percentage }}%</h2>
+        </div>
+        <center><a href="/" class="back">&lt; Back to Upload</a></center>
     </div>
 </body>
 </html>

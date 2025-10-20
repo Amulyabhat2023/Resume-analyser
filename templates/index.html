@@ -5,108 +5,125 @@
     <title>AI Resume Analyzer</title>
     <style>
         body {
-            background-color: #121212;
-            color: #eee;
+            background: linear-gradient(145deg, #0f0f0f, #1c1c1c);
+            color: #e2e2e2;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
         }
+
         h1 {
-            color: #ffcc00;
+            color: #ffcc33;
             text-align: center;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
         }
+
         form {
-            max-width: 600px;
-            margin: 2rem auto;
-            background: #222;
-            padding: 1rem 2rem;
-            border-radius: 8px;
+            background: #1e1e1e;
+            padding: 2rem 3rem;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(255, 204, 51, 0.15);
+            width: 90%;
+            max-width: 500px;
         }
+
         label {
+            font-weight: 600;
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: bold;
+            color: #f0f0f0;
         }
-        input[type="file"], textarea {
+
+        input[type="file"],
+        textarea {
             width: 100%;
-            margin-bottom: 1rem;
-            padding: 0.5rem;
-            background: #333;
-            border: none;
-            border-radius: 4px;
-            color: #eee;
-        }
-        button {
-            background-color: #ffcc00;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 5px;
-            color: #222;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-        }
-        .result {
-            margin-top: 2rem;
-            max-width: 600px;
-            background: #222;
-            padding: 1rem 2rem;
+            margin-bottom: 1.5rem;
+            padding: 0.75rem 1rem;
             border-radius: 8px;
+            border: 1px solid #444;
+            background: #2a2a2a;
+            color: #eee;
+            font-size: 0.95rem;
         }
-        .skills {
-            margin-top: 1rem;
+
+        input[type="file"]::file-selector-button {
+            background: #ffcc33;
+            color: #222;
+            border: none;
+            font-weight: 600;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: 0.3s;
         }
-        .skill {
-            display: inline-block;
-            background: #444;
-            padding: 0.25rem 0.5rem;
-            border-radius: 12px;
-            margin: 0.25rem 0.25rem 0 0;
+
+        input[type="file"]::file-selector-button:hover {
+            background: #ffaa00;
+        }
+
+        button {
+            display: block;
+            background-color: #ffcc33;
+            color: #222;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.75rem;
+            width: 100%;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(255, 204, 51, 0.4);
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ffaa00;
+            transform: scale(1.02);
+        }
+
+        footer {
+            margin-top: 2rem;
+            color: #777;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
     <h1>AI-Powered Resume Analyzer & Job Match</h1>
+
     <form id="upload-form" enctype="multipart/form-data">
-        <label for="resume">Upload Resume (PDF, DOCX, TXT):</label>
-        <input type="file" id="resume" name="resume" accept=".pdf,.docx,.txt" required />
+        <label for="resume">Upload Resume (PDF, DOCX, or TXT):</label>
+        <input type="file" id="resume" name="resume" accept=".pdf,.docx,.txt" required>
+
         <label for="jobdesc">Job Description (optional):</label>
         <textarea id="jobdesc" name="job_description" rows="4" placeholder="Paste job description here..."></textarea>
-        <button type="submit">Analyze</button>
+
+        <button type="submit">Analyze Resume</button>
     </form>
 
-    <div id="result" class="result" style="display:none;">
-        <h2>Analysis Result</h2>
-        <p><strong>Match Score:</strong> <span id="matchScore"></span>%</p>
-        <p><strong>Predicted Category:</strong> <span id="category"></span></p>
-        <div class="skills">
-            <strong>Skills:</strong> <span id="skills"></span>
-        </div>
-        <div class="skills">
-            <strong>Missing Skills:</strong> <span id="missingSkills"></span>
-        </div>
-        <div>
-            <strong>Recommendations:</strong>
-            <ul id="recommendations"></ul>
-        </div>
-    </div>
+    <footer>Developed by AI Resume Analyzer | © 2025</footer>
 
     <script>
-    const form = document.getElementById('upload-form');
-    form.onsubmit = async (e) => {
-        e.preventDefault();
-        const formData = new FormData(form);
-        const response = await fetch('/upload', { method: 'POST', body: formData });
-        const data = await response.json();
+        const form = document.getElementById('upload-form');
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch('/upload', { method: 'POST', body: formData });
+            const data = await response.json();
 
-        if (data.analysis_id) {
-            window.location.href = '/results/' + data.analysis_id;
-        } else if (data.error) {
-            alert(data.error);
-        } else {
-            alert('Analysis failed');
-        }
-    };
+            if (data.analysis_id) {
+                window.location.href = '/results/' + data.analysis_id;
+            } else if (data.error) {
+                alert(data.error);
+            } else {
+                alert('Analysis failed');
+            }
+        };
     </script>
-
 </body>
 </html>

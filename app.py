@@ -47,10 +47,10 @@ def upload_resume():
     resume_info = skill_extractor.extract_resume_info(cleaned_resume)
     job_reqs = skill_extractor.extract_job_requirements(cleaned_job_desc)
     resume_category = resume_classifier.predict_category(cleaned_resume)['category']
-    match_score = similarity_engine.calculate_similarity(cleaned_resume, cleaned_job_desc)
+    match_score = round(similarity_engine.calculate_similarity(cleaned_resume, cleaned_job_desc)*100,2)
     skill_analysis = job_matcher.analyze_skill_gaps(resume_info['skills'], job_reqs['required_skills'])
     recommendations = job_matcher.generate_recommendations(skill_analysis, resume_category)
-
+    
     resume_record = Resume(filename=filename, raw_text=resume_text, skills_json=json.dumps(resume_info['skills']))
     db.session.add(resume_record)
     db.session.commit()
@@ -87,7 +87,7 @@ def show_results(analysis_id):
         recommendations=recommendations,
         skill_analysis=skill_analysis,
         category=category,
-        analysis=analysis_record
+        analysis=analysis_record,
     )
 
 if __name__ == '__main__':
